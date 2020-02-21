@@ -61,19 +61,8 @@ def get_homework(source):
 def remove_items(items, category):
     for tsk in category.tasks():
         if not any(tsk.title == item.text for item in items):
-            print(tsk.title)
+            print("For removal: ", tsk.title)
             tsk.destroy()
-            items_with_not_same_title = [item for item in items if not item.text == tsk.title]
-            y = items_with_not_same_title[0].date[:-4]
-            d = items_with_not_same_title[0].date[-2:]
-            m = items_with_not_same_title[0].date[-4:-2]
-            date = "-".join([y, d, m])
-            response_list = service.events().list(calendarId='primary', timeMin=date + 'T00:00:00+02:00',
-                                                  timeMax=date + 'T23:59:59+02:00').execute()
-            items_for_removal = [item for item in response_list["items"]
-                                 if any(item["summary"] == i.text for i in items_with_not_same_title)]
-            for i in items_for_removal:
-                service.events().delete(calendarId='primary', eventId=i["eventId"])
 
 
 def add_items(items, input_user, category):
@@ -121,6 +110,7 @@ def add_items(items, input_user, category):
                 repeatingMethod='TASK_REPEAT_OFF',
                 alert=alert,
                 dueDate=item.dateInTicks * 1000)
+            print("Added:", item.text)
             category.add_task(tsk)
 
 
@@ -186,9 +176,9 @@ def add_lesson(days, date):
     for day in days:
         date_updated = week_start_date + datetime.timedelta(days=day_count)
         for lesson in day:
-            time = day.get(lesson)
-            start_time = time[0]
-            end_time = time[1]
+            lesson_time = day.get(lesson)
+            start_time = lesson_time[0]
+            end_time = lesson_time[1]
             date_formatted_base = str(date_updated).split(' ')[0] + 'T'
             start_date = date_formatted_base + start_time
             end_date = date_formatted_base + end_time
@@ -222,7 +212,9 @@ def add_lesson(days, date):
                         service.events().insert(calendarId='primary', body=event).execute()
             else:
                 service.events().insert(calendarId='primary', body=event).execute()
+                print("Added lesson:", lesson)
         day_count += 1
+
 
 # Basic stuff
 login_url = "https://nrg.ope.ee/auth/"
@@ -247,14 +239,11 @@ if not creds or not creds.valid:
         pickle.dump(creds, token)
 service = build('calendar', 'v3', credentials=creds)
 
-def page_has_loaded(driver):
-    return driver.execute_script('return document.readyState;') == 'complete'
-
 
 # Getting timetable
 chrome_options = Options()
 chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(r'C:\Program Files (x86)\Python 3.7.4\chromedriver.exe',options=chrome_options)
+driver = webdriver.Chrome(executable_path='D:\\Projects\\StuudiumScraper\\chromedriver.exe', options=chrome_options)
 driver.get(timetable_url)
 WebDriverWait(driver, 50).until(ec.visibility_of_element_located((By.XPATH, "//div[@class='print-sheet']")))
 first_week_response = driver.page_source
