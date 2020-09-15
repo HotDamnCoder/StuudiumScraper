@@ -1,199 +1,83 @@
-import pickle
-import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from anydo_api.client import Client
-from anydo_api.task import Task
-from bs4 import BeautifulSoup
 import bs4
+import json
 import requests
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-import time
-import datetime
+
+from anydo_api.task import Task as Any_doTask
+from bs4 import BeautifulSoup
+from constants import *
 
 
-class HomeWork:
-    def __init__(self, text, check, is_test, duedate, due):
+class Task:
+    def __init__(self, text, check, test, duedate_ticks, var_duedate):
         self.text = text
         self.checked = check
-        self.test = is_test
-        self.dateInTicks = duedate
-        self.date = due
+        self.test = test
+        self.dateInTicks = duedate_ticks * 1000
+        self.date = var_duedate
 
 
-def get_homework(source):
-    source = BeautifulSoup(source.text, features="html.parser").findAll('div', {'class': 'todo_container'})
-    tasks = []
-    for div in source:
-        date_in_tick = int(div.attrs['data-date_ts'])
-        date = div.attrs['data-date']
-        subject = div.find('a', {"class": "subject_name"})
-        checked = 'is_marked' in div.attrs['class']
-        if subject is not None:
-            subject = subject.text + " "
-        else:
-            subject = ""
-        test = not div.find('span', {"class": "test_indicator"}) is None
-        task = div.find('span', {"class": "todo_content"})
-        if task is not None:
-            task = "".join([str(a) if type(a) is bs4.element.NavigableString else a.attrs[
-                'href'] if 'href' in a.attrs.keys() else "" for a in task.contents])
-            if test:
-                task = subject + "Kontrolltöö " + task
-            else:
-                task = subject + task
-        else:
-            if test:
-                task = subject + "Kontrolltöö"
-            else:
-                task = subject.strip()
-        task = task.strip()
-        homework = HomeWork(task, checked, test, date_in_tick, date)
-        tasks.append(homework)
-    return tasks
+def find_table(tables, table_id):
+    table_i = None
+    for table in tables:
+        if table['id'] == table_id:
+            table_i = tables.index(table)
+    if table_i is None:
+        raise Exception("Couldn't find table", table_id)
+    return table_i
 
 
-def remove_items(items, category):
-    for tsk in category.tasks():
-        if not any(tsk.title == item.text for item in items):
-            print(tsk.title)
-            tsk.destroy()
-            items_with_not_same_title = [item for item in items if not item.text == tsk.title]
-            y = items_with_not_same_title[0].date[:-4]
-            d = items_with_not_same_title[0].date[-2:]
-            m = items_with_not_same_title[0].date[-4:-2]
-            date = "-".join([y, d, m])
-            response_list = service.events().list(calendarId='primary', timeMin=date + 'T00:00:00+02:00',
-                                                  timeMax=date + 'T23:59:59+02:00').execute()
-            items_for_removal = [item for item in response_list["items"]
-                                 if any(item["summary"] == i.text for i in items_with_not_same_title)]
-            for i in items_for_removal:
-                service.events().delete(calendarId='primary', eventId=i["eventId"])
+def get_class_id(timetable_dict):
+    class_id = ''
+    class_index = find_table(timetable_dict['r']['tables'], 'classes')
+    for rows in timetable_dict['r']['tables'][class_index]['data_rows']:
+        if rows['short'] == CLASS:
+            class_id = rows['id']
+            break
+    if class_id == '':
+        raise Exception("Couldn't find class id")
+    return class_id
 
 
-def add_items(items, input_user, category):
-    alert = {'offset': 0, 'repeatEndsAfterOccurrences': -1, 'repeatStartsOn': None, 'repeatMonthType': 'ON_DATE',
-             'repeatDays': '0000000', 'type': 'NONE', 'customTime': 0, 'repeatNextOccurrence': None,
-             'repeatEndType': 'REPEAT_END_NEVER', 'repeatEndsOn': None, 'repeatInterval': 1}
-    for item in items:
-        if item.checked:
-            check = "CHECKED"
-        else:
-            check = ""
-        if not any(obj.title == item.text for obj in category.tasks()):
-            print(item.text)
-            if item.test:
-                priority = "High"
-                y = item.date[:-4]
-                d = item.date[-2:]
-                m = item.date[-4:-2]
-                due = "-".join([y, m, d])
-                event = {
-                    'summary': item.text,
-                    'start': {
-                        'date': due,
-                        'timeZone': 'EET'
-                    },
-                    'end': {
-                        'date': due,
-                        'timeZone': 'EET'
-                    },
-                    'reminders': {
-                        'useDefault': False,
-                        'overrides': [
-                        ]
-                    }
-                }
-                service.events().insert(calendarId='primary', body=event).execute()
-            else:
-                priority = "Low"
-            tsk = Task.create(
-                status=check,
-                user=input_user,
-                title=item.text,
-                priority=priority,
-                category='School',
-                repeatingMethod='TASK_REPEAT_OFF',
-                alert=alert,
-                dueDate=item.dateInTicks * 1000)
-            category.add_task(tsk)
-
-
-def parse_date(rect):
-    x = rect.attrs['x']
-    if x == '345':
-        date = ['08:35:00', '09:45:00']
-    elif x == '772.5':
-        date = ['09:55:00', '11:05:00']
-    elif x == '1200':
-        date = ['11:15:00', '12:25:00']
-    elif x == '1627.5':
-        date = ['12:55:00', '14:05:00']
-    elif x == '2055':
-        date = ['14:15:00', '15:25:00']
-    else:
-        date = ['15:35:00', '16:45:00']
+def convert_to_google_date(var_duedate):
+    y = var_duedate[:-4]
+    d = var_duedate[-2:]
+    m = var_duedate[-4:-2]
+    date = "-".join([y, m, d])
     return date
 
 
-def parse_rects(rects, valik, group):
-    rect_dict = {}
-    for rect in rects:
-        value = rect.text.split('\n')[0]
-        if "Group" in rect.text:
-            if "Group " + str(group) in rect.text:
-                rect_dict[value] = parse_date(rect)
-        elif value not in valik:
-            rect_dict[value] = parse_date(rect)
-    return rect_dict
+def get_timetable_data(tt_url, db_url, tt_payload, db_payload, date_from, date_to):
+    timetable_session = requests.session()
+
+    tt_payload['__args'][1]['datefrom'] = str(date_from)
+    tt_payload['__args'][1]['dateto'] = str(date_to)
+
+    db_payload['__args'][2]['vt_filter']['datefrom'] = str(date_from)
+    db_payload['__args'][2]['vt_filter']['dateto'] = str(date_to)
+
+    timetable_maindb_json = json.loads(
+        timetable_session.post(db_url, json.dumps(db_payload)).text)
+
+    tt_payload['__args'][1]['id'] = get_class_id(timetable_maindb_json)
+
+    timetable_currenttt_json = json.loads(
+        timetable_session.post(tt_url, json.dumps(tt_payload)).text)
+
+    timetable_session.close()
+
+    return timetable_currenttt_json, timetable_maindb_json
 
 
-def get_timetable(source, valik, group):
-    source = BeautifulSoup(source, features="html.parser")
-
-    e_rects = source.findAll('rect', {'y': '420'})
-    e_rects.extend(source.findAll('rect', {'y': '573'}))
-    e = parse_rects(e_rects, valik, group)
-
-    t_rects = source.findAll('rect', {'y': '726'})
-    t_rects.extend(source.findAll('rect', {'y': '879'}))
-    t = parse_rects(t_rects, valik, group)
-
-    k_rects = source.findAll('rect', {'y': '1032'})
-    k_rects.extend(source.findAll('rect', {'y': '1185'}))
-    k = parse_rects(k_rects, valik, group)
-
-    n_rects = source.findAll('rect', {'y': '1338'})
-    n_rects.extend(source.findAll('rect', {'y': '1491'}))
-    n = parse_rects(n_rects, valik, group)
-
-    r_rects = source.findAll('rect', {'y': '1644'})
-    r_rects.extend(source.findAll('rect', {'y': '1797'}))
-    r = parse_rects(r_rects, valik, group)
-
-    return e, t, k, n, r
-
-
-def add_lesson(days, date):
-    current_weekday = 6 if int(date.strftime('%w')) - 1 < 0 else int(date.strftime('%w')) - 1
-    week_start_date = date - datetime.timedelta(days=current_weekday)
-    day_count = 0
-    for day in days:
-        date_updated = week_start_date + datetime.timedelta(days=day_count)
-        for lesson in day:
-            time = day.get(lesson)
-            start_time = time[0]
-            end_time = time[1]
-            date_formatted_base = str(date_updated).split(' ')[0] + 'T'
-            start_date = date_formatted_base + start_time
-            end_date = date_formatted_base + end_time
-            event = {
-                'summary': lesson,
+def add_lessons(timetable_dict, db_dict, group):
+    for item in timetable_dict['r']['ttitems']:
+        if ('' in item['groupnames'] or 'Group ' + group in item['groupnames']) and len(item['classids']) <= 2:
+            start_date = item['date'] + "T" + item['starttime'] + ":00"
+            end_date = item['date'] + "T" + item['endtime'] + ":00"
+            t_i = find_table(db_dict['r']['tables'],  'subjects')
+            summary = find_if(db_dict['r']['tables'][t_i]['data_rows'], lambda x: item['subjectid'] == x['id'])['short']
+            colliding_events = list_events(CALENDER_ID, start_date, end_date)
+            lesson_event = {
+                'summary': summary,
                 'description': "Tund",
                 'start': {
                     'dateTime': start_date,
@@ -209,82 +93,144 @@ def add_lesson(days, date):
                     ]
                 }
             }
-            response_events = service.events().list(calendarId='primary',
-                                                    timeMin=start_date + "+02:00",
-                                                    timeMax=end_date + "+02:00").execute()
-            if len(response_events["items"]) != 0:
-                with_description = [i for i in response_events["items"] if "description" in i.keys()]
-                if any(item["description"] == "Tund" for item in with_description):
-                    items_for_removal = [item for item in with_description if item["summary"] != lesson]
-                    if len(items_for_removal) != 0:
-                        for i in items_for_removal:
-                            service.events().delete(calendarId='primary', eventId=i["id"]).execute()
-                        service.events().insert(calendarId='primary', body=event).execute()
+            if len(colliding_events["items"]) >= 1:
+                with_description_events = [i for i in colliding_events["items"] if "description" in i.keys()]
+                for with_description_event in with_description_events:
+                    if with_description_event["description"] == "Tund":
+                        if with_description_event['summary'] != summary:
+                            SERVICE.events().update(calendarId=CALENDER_ID, eventId=with_description_event['id'],
+                                                    body=lesson_event)
+                            print('Renamed lesson', with_description_event['summary'], 'to', summary)
             else:
-                service.events().insert(calendarId='primary', body=event).execute()
-        day_count += 1
+                SERVICE.events().insert(calendarId=CALENDER_ID, body=lesson_event).execute()
+                print('Added lesson:', summary)
 
-# Basic stuff
-login_url = "https://nrg.ope.ee/auth/"
-timetable_url = "https://nrg.edupage.org/timetable/"
-message_url = "https://nrg.ope.ee/suhtlus/api/channels/updates/a/inbox?merge_events=1&get_post_membership_data=1"
-data = {"data[User][username]": "Marcusb2kl@gmail.com",
-        "data[User][password]": "678M5cFq1u3I"}
-# Accessing Google api
-SCOPES = ['https://www.googleapis.com/auth/calendar']
-creds = None
-if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
-        creds = pickle.load(token)
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-    with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
-service = build('calendar', 'v3', credentials=creds)
 
-def page_has_loaded(driver):
-    return driver.execute_script('return document.readyState;') == 'complete'
+def list_events(cal_id, start_date, end_date):
+    current_timezone = datetime.datetime.now().astimezone().isoformat()[-6:]
+    return SERVICE.events().list(calendarId=cal_id,
+                                 timeMin=start_date + current_timezone,
+                                 timeMax=end_date + current_timezone,
+                                 ).execute()
+
+
+def find_if(iterable, condition):
+    found_item = next((item for item in iterable if condition(item)), None)
+    if found_item is None:
+        raise Exception("Couldn't find item satisfying said condition.")
+    return found_item
+
+
+def if_any(iterable, condition):
+    return any(condition(item) for item in iterable)
+
+
+def update_duplicate(var_due, var_task, var_task_event):
+    var_colliding_events = list_events(CALENDER_ID, var_due, var_due)['items']
+    var_event = find_if(var_colliding_events, lambda x: x['summary'] == var_task.text)
+    SERVICE.events().update(calendarId=CALENDER_ID, eventId=var_event['id'],
+                            body=var_task_event)
 
 
 # Getting timetable
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(r'C:\Program Files (x86)\Python 3.7.4\chromedriver.exe',options=chrome_options)
-driver.get(timetable_url)
-WebDriverWait(driver, 50).until(ec.visibility_of_element_located((By.XPATH, "//div[@class='print-sheet']")))
-first_week_response = driver.page_source
-next_week_button = driver.find_element_by_xpath('//span[text() = "See nädal"]')
-next_week_button.click()
-WebDriverWait(driver, 50).until(ec.visibility_of_element_located((By.XPATH, "//a[text() = 'Järgmine nädal']")))
-next_week_button = driver.find_element_by_xpath("//a[text() = 'Järgmine nädal']")
-next_week_button.click()
-time.sleep(10)
-second_week_response = driver.page_source
-driver.close()
-Valikkursused = ["Füüsika olümpiaad", "Segakoor", "Inglise keele suhtlus", "Saksa keel valikaine",
-                 "Keemia olümpiaad", "Matemaatika olümpiaad"]
-es, te, ko, ne, re = get_timetable(first_week_response, Valikkursused, 1)
-now = datetime.datetime.now()
-add_lesson([es, te, ko, ne, re], now)
-es, te, ko, ne, re = get_timetable(second_week_response, Valikkursused, 1)
-now += datetime.timedelta(days=7)
-add_lesson([es, te, ko, ne, re], now)
-# Getting tasks
-session = requests.session()
-main_page = session.post(login_url, data)
-session.close()
-Tasks = get_homework(main_page)
-user = Client(email='marcusb2kl@gmail.com', password='Bindevald16').get_user()
-categories = list(map(lambda category: category['name'], user.categories(refresh=True)))
-chosen_category = user.categories()[categories.index("School")]
-add_items(Tasks, user, chosen_category)
-remove_items(Tasks, chosen_category)
+current_week_data, current_week_db_data = get_timetable_data(TIMETABLE_URL, TIMETABLE_MAINDB_URL,
+                                                             TIMETABLE_PAYLOAD, TIMETABLE_MAINDB_PAYLOAD,
+                                                             DATEFROM, DATETO)
+add_lessons(current_week_data, current_week_db_data, STUDY_GROUP)
 
+next_week_data, next_week_db_data = get_timetable_data(TIMETABLE_URL, TIMETABLE_MAINDB_URL,
+                                                       TIMETABLE_PAYLOAD, TIMETABLE_MAINDB_PAYLOAD,
+                                                       NEXTWEEKDATEFROM, NEXTWEEKDATETO)
+add_lessons(next_week_data, next_week_db_data, STUDY_GROUP)
 
+# Get stuudium page
+stuudium_session = requests.session()
+stuudium_page = stuudium_session.post(STUUDIUM_LOGIN_URL, STUUDIUM_PAYLOAD)
+stuudium_session.close()
 
+# Get tasks from stuudium page
+todos = BeautifulSoup(stuudium_page.text, features="html.parser").findAll('div', {'class': 'todo_container'})
+tasks = []
+for todo_container in todos:
+    due_date_in_ticks = int(todo_container.attrs['data-date_ts'])
+    due_date = todo_container.attrs['data-date']
+    is_marked = 'is_marked' in todo_container.attrs['class']
+    is_test = 'is_test' in todo_container.find('div').attrs['class']
+    todo_content_container = todo_container.find('span', {"class": "todo_content"})
+    todo_content_container_text = ""
+    for content in todo_content_container.contents:
+        if isinstance(content, bs4.Tag):
+            if content.name == 'br':
+                todo_content_container_text += '\n'
+            else:
+                todo_content_container_text += content.text
+        else:
+            todo_content_container_text += content
+    spliced_todo_container_text = todo_container.text.strip().replace('\n', ' ').split()[:-1]
+    splice_index = 2 if is_test else 1
+    spliced_todo_container_text[splice_index] = todo_content_container_text
+    todo_text = " ".join(spliced_todo_container_text[:splice_index + 1])
+    homework = Task(todo_text, is_marked, is_test, due_date_in_ticks, due_date)
+    tasks.append(homework)
 
+# Add tasks
+for task in tasks:
+    due = convert_to_google_date(task.date)
+    task_event = {
+        'summary': task.text,
+        'start': {
+            'date': due,
+            'timeZone': 'EET'
+        },
+        'end': {
+            'date': due,
+            'timeZone': 'EET'
+        },
+        'reminders': {
+            'useDefault': False,
+            'overrides': [
+            ]
+        }
+    } if task.test else None
+    if not if_any(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text):
+        if task.test:
+            # noinspection PyBroadException
+            try:
+                update_duplicate(due, task, task_event)
+            except Exception:
+                SERVICE.events().insert(calendarId=CALENDER_ID, body=task_event).execute()
+                print('Added test "', task.text, '" to calender')
+        anydo_task = Any_doTask.create(
+            status="CHECKED" if task.checked else "",
+            user=USER,
+            title=task.text,
+            priority='High' if task.test else 'Low',
+            category=ANY_DO_CATEGORY['name'],
+            repeatingMethod='TASK_REPEAT_OFF',
+            alert=ANY_DO_ALERT,
+            dueDate=task.dateInTicks)
+        ANY_DO_CATEGORY.add_task(anydo_task)
+        print("Task added:", anydo_task.title)
+
+    elif if_any(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks):
+        anydo_task = find_if(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks)
+        if task.test:
+            duedate = str(datetime.datetime.today() +
+                          datetime.timedelta(microseconds=anydo_task['dueDate'] / 10000)).split()[0]
+            update_duplicate(due, task, task_event)
+        else:
+            anydo_task['dueDate'] = task.dateInTicks
+            USER.save()
+
+    else:
+        anydo_task = find_if(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] == task.dateInTicks)
+        if task.checked and anydo_task['status'] == "":
+            anydo_task.check()
+            print('Task checked:', anydo_task.title)
+
+# Remove old or not existent tasks
+for anydo_task in ANY_DO_CATEGORY.tasks():
+    if (not if_any(tasks, lambda x: anydo_task.title == x.text)) and \
+            not if_any(tasks, lambda x: anydo_task.title == x.text and anydo_task['dueDate'] != x.dateInTicks):
+        anydo_task.destroy()
+        print("Task destroyed:", anydo_task.title)
