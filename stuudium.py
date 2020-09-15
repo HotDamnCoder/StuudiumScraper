@@ -192,7 +192,7 @@ for task in tasks:
             ]
         }
     } if task.test else None
-    if not if_any(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text):
+    if not if_any(ANY_CATEGORY.tasks(), lambda x: x.title == task.text):
         if task.test:
             # noinspection PyBroadException
             try:
@@ -205,15 +205,15 @@ for task in tasks:
             user=USER,
             title=task.text,
             priority='High' if task.test else 'Low',
-            category=ANY_DO_CATEGORY['name'],
+            category=ANY_CATEGORY['name'],
             repeatingMethod='TASK_REPEAT_OFF',
             alert=ANY_DO_ALERT,
             dueDate=task.dateInTicks)
-        ANY_DO_CATEGORY.add_task(anydo_task)
+        ANY_CATEGORY.add_task(anydo_task)
         print("Task added:", anydo_task.title)
 
-    elif if_any(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks):
-        anydo_task = find_if(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks)
+    elif if_any(ANY_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks):
+        anydo_task = find_if(ANY_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] != task.dateInTicks)
         if task.test:
             duedate = str(datetime.datetime.today() +
                           datetime.timedelta(microseconds=anydo_task['dueDate'] / 10000)).split()[0]
@@ -223,13 +223,13 @@ for task in tasks:
             USER.save()
 
     else:
-        anydo_task = find_if(ANY_DO_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] == task.dateInTicks)
+        anydo_task = find_if(ANY_CATEGORY.tasks(), lambda x: x.title == task.text and x['dueDate'] == task.dateInTicks)
         if task.checked and anydo_task['status'] == "":
             anydo_task.check()
             print('Task checked:', anydo_task.title)
 
 # Remove old or not existent tasks
-for anydo_task in ANY_DO_CATEGORY.tasks():
+for anydo_task in ANY_CATEGORY.tasks():
     if (not if_any(tasks, lambda x: anydo_task.title == x.text)) and \
             not if_any(tasks, lambda x: anydo_task.title == x.text and anydo_task['dueDate'] != x.dateInTicks):
         anydo_task.destroy()

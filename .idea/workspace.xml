@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Marcus.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stuudium.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stuudium.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/credentials.json" beforeDir="false" afterPath="$PROJECT_DIR$/credentials.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stuudium.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuudium.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,8 +101,15 @@
       <workItem from="1600173886209" duration="3262000" />
       <workItem from="1600177659361" duration="1866000" />
       <workItem from="1600181683211" duration="7409000" />
-      <workItem from="1600193149030" duration="1490000" />
+      <workItem from="1600193149030" duration="1785000" />
     </task>
+    <task id="LOCAL−00001" summary="Major fixing and cleaning">
+      <created>1600194773884</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1600194773884</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +127,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Major fixing and cleaning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major fixing and cleaning" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

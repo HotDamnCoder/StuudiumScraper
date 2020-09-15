@@ -124,4 +124,4 @@ SERVICE = build('calendar', 'v3', credentials=creds)
 # Initialize any.do
 USER = Client(email=ANY_DO_USERNAME, password=ANY_DO_PASSWORD).get_user()
 ANY_DO_CATEGORIES = list(map(lambda cate: cate['name'], USER.categories(refresh=True)))
-ANY_DO_CATEGORY = USER.categories()[ANY_DO_CATEGORIES.index(ANY_DO_CATEGORY_NAME)]
+ANY_CATEGORY = USER.categories()[ANY_DO_CATEGORIES.index(ANY_DO_CATEGORY_NAME)]
