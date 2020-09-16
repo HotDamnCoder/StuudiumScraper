@@ -1,2 +1,3 @@
 # StuudiumScraper
-Program to scrape Stuudium and add your homework to any.do. Also add tests and your timetable to your google calender
+A simple Python script, which scrapes your homework from stuudium and your school timetable from nrg.edupage.org. It adds that information to your any.do and Google calander with the help of Google calander API and any.do API.
+A sample config file is given, which is needed for the program to work
