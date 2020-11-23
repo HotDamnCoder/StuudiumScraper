@@ -16,6 +16,13 @@ class Task:
         self.date = var_duedate
 
 
+def find_calender_id(summary):
+    for calender in CALANDER_IDS:
+        if calender['summary'] == summary:
+            return calender['id']
+    return 'primary'
+
+
 def find_table(tables, table_id):
     table_i = None
     for table in tables:
@@ -74,8 +81,9 @@ def add_lessons(timetable_dict, db_dict, group):
             start_date = item['date'] + "T" + item['starttime'] + ":00"
             end_date = item['date'] + "T" + item['endtime'] + ":00"
             t_i = find_table(db_dict['r']['tables'],  'subjects')
-            summary = find_if(db_dict['r']['tables'][t_i]['data_rows'], lambda x: item['subjectid'] == x['id'])['short']
-            colliding_events = list_events(CALENDER_ID, start_date, end_date)
+            summary = find_if(db_dict['r']['tables'][t_i]['data_rows'], lambda x: item['subjectid'] == x['id'])['name']
+            cal_id = find_calender_id(summary)
+            colliding_events = list_events(cal_id, start_date, end_date)
             lesson_event = {
                 'summary': summary,
                 'description': "Tund",
@@ -98,11 +106,11 @@ def add_lessons(timetable_dict, db_dict, group):
                 for with_description_event in with_description_events:
                     if with_description_event["description"] == "Tund":
                         if with_description_event['summary'] != summary:
-                            SERVICE.events().update(calendarId=CALENDER_ID, eventId=with_description_event['id'],
+                            SERVICE.events().update(calendarId=cal_id, eventId=with_description_event['id'],
                                                     body=lesson_event)
                             print('Renamed lesson', with_description_event['summary'], 'to', summary)
             else:
-                SERVICE.events().insert(calendarId=CALENDER_ID, body=lesson_event).execute()
+                SERVICE.events().insert(calendarId=cal_id, body=lesson_event).execute()
                 print('Added lesson:', summary)
 
 
@@ -125,10 +133,10 @@ def if_any(iterable, condition):
     return any(condition(item) for item in iterable)
 
 
-def update_duplicate(var_due, var_task, var_task_event):
-    var_colliding_events = list_events(CALENDER_ID, var_due, var_due)['items']
+def update_duplicate(var_due, var_task, var_task_event, var_cal_id):
+    var_colliding_events = list_events(var_cal_id, var_due, var_due)['items']
     var_event = find_if(var_colliding_events, lambda x: x['summary'] == var_task.text)
-    SERVICE.events().update(calendarId=CALENDER_ID, eventId=var_event['id'],
+    SERVICE.events().update(calendarId=var_cal_id, eventId=var_event['id'],
                             body=var_task_event)
 
 
@@ -145,7 +153,9 @@ add_lessons(next_week_data, next_week_db_data, STUDY_GROUP)
 
 # Get stuudium page
 stuudium_session = requests.session()
-stuudium_page = stuudium_session.post(STUUDIUM_LOGIN_URL, STUUDIUM_PAYLOAD)
+stuudium_session.headers = STUUDIUM_HEADERS
+stuudium_session.post(STUUDIUM_LOGIN_URL, STUUDIUM_PAYLOAD)
+stuudium_page = stuudium_session.get(STUUDIUM_PAGE_URL)
 stuudium_session.close()
 
 # Get tasks from stuudium page
@@ -158,24 +168,28 @@ for todo_container in todos:
     is_test = 'is_test' in todo_container.find('div').attrs['class']
     todo_content_container = todo_container.find('span', {"class": "todo_content"})
     todo_content_container_text = ""
-    for content in todo_content_container.contents:
-        if isinstance(content, bs4.Tag):
-            if content.name == 'br':
-                todo_content_container_text += '\n'
+    if todo_content_container is not None:
+        for content in todo_content_container.contents:
+            if isinstance(content, bs4.Tag):
+                if content.name == 'br':
+                    todo_content_container_text += '\n'
+                else:
+                    todo_content_container_text += content.text
             else:
-                todo_content_container_text += content.text
-        else:
-            todo_content_container_text += content
-    spliced_todo_container_text = todo_container.text.strip().replace('\n', ' ').split()[:-1]
-    splice_index = 2 if is_test else 1
-    spliced_todo_container_text[splice_index] = todo_content_container_text
-    todo_text = " ".join(spliced_todo_container_text[:splice_index + 1])
-    homework = Task(todo_text, is_marked, is_test, due_date_in_ticks, due_date)
-    tasks.append(homework)
+                todo_content_container_text += content
+        spliced_todo_container_text = todo_container.text.strip().replace('\n', ' ').split()[:-1]
+        splice_index = 2 if is_test else 1
+        spliced_todo_container_text[splice_index] = todo_content_container_text
+        todo_text = " ".join(spliced_todo_container_text[:splice_index + 1])
+        homework = Task(todo_text, is_marked, is_test, due_date_in_ticks, due_date)
+        tasks.append(homework)
+    else:
+        continue
 
 # Add tasks
 for task in tasks:
     due = convert_to_google_date(task.date)
+    calender_id = find_calender_id('Kontrolltööd')
     task_event = {
         'summary': task.text,
         'start': {
@@ -196,9 +210,9 @@ for task in tasks:
         if task.test:
             # noinspection PyBroadException
             try:
-                update_duplicate(due, task, task_event)
+                update_duplicate(due, task, task_event, calender_id)
             except Exception:
-                SERVICE.events().insert(calendarId=CALENDER_ID, body=task_event).execute()
+                SERVICE.events().insert(calendarId=calender_id, body=task_event).execute()
                 print('Added test "', task.text, '" to calender')
         anydo_task = Any_doTask.create(
             status="CHECKED" if task.checked else "",
@@ -217,7 +231,7 @@ for task in tasks:
         if task.test:
             duedate = str(datetime.datetime.today() +
                           datetime.timedelta(microseconds=anydo_task['dueDate'] / 10000)).split()[0]
-            update_duplicate(due, task, task_event)
+            update_duplicate(due, task, task_event, calender_id)
         else:
             anydo_task['dueDate'] = task.dateInTicks
             USER.save()
