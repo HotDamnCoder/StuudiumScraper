@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/stuudium.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stuudium.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuudium.py" beforeDir="false" afterPath="$PROJECT_DIR$/stuudium.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stuudium.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +37,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
-  <component name="RunManager" selected="Python.stuudium">
+  <component name="RunManager" selected="Python.main">
     <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="stuudium" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,6 +52,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/constants.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="stuudium" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Marcus\Desktop\Projects\StuudiumScraper\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -86,8 +106,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.stuudium" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.constants" />
+        <item itemvalue="Python.stuudium" />
       </list>
     </recent_temporary>
   </component>
@@ -131,6 +152,10 @@
       <workItem from="1606082708038" duration="2301000" />
       <workItem from="1606154608117" duration="2091000" />
       <workItem from="1606156865413" duration="4030000" />
+      <workItem from="1606160909614" duration="50000" />
+      <workItem from="1606767495634" duration="844000" />
+      <workItem from="1606832999832" duration="17822000" />
+      <workItem from="1606917258660" duration="10881000" />
     </task>
     <task id="LOCAL−00001" summary="Major fixing and cleaning">
       <created>1600194773884</created>
@@ -138,7 +163,14 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1600194773884</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fIXINFG">
+      <created>1606160938033</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606160938033</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,57 +190,78 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Major fixing and cleaning" />
-    <option name="LAST_COMMIT_MESSAGE" value="Major fixing and cleaning" />
+    <MESSAGE value="fIXINFG" />
+    <option name="LAST_COMMIT_MESSAGE" value="fIXINFG" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606157500518">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1606157500518" />
-    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1606156697818">
+    <state x="585" y="21" key="CommitChangelistDialog2" timestamp="1606160937000">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="740" y="294" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606156697818" />
-    <state width="1877" height="400" key="GridCell.Tab.0.bottom" timestamp="1606160897966">
+    <state x="585" y="21" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1606160937000" />
+    <state width="1035" height="618" key="DebuggerActiveHint" timestamp="1606935516173">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897966" />
-    <state width="1877" height="400" key="GridCell.Tab.0.center" timestamp="1606160897966">
+    <state width="1035" height="618" key="DebuggerActiveHint/0.0.1920.1080@0.0.1920.1080" timestamp="1606935516173" />
+    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1606849839747">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897966" />
-    <state width="1877" height="400" key="GridCell.Tab.0.left" timestamp="1606160897966">
+    <state x="740" y="294" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606849839747" />
+    <state width="1877" height="391" key="GridCell.Tab.0.bottom" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897966" />
-    <state width="1877" height="400" key="GridCell.Tab.0.right" timestamp="1606160897966">
+    <state width="1877" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.0.center" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897966" />
-    <state width="1877" height="400" key="GridCell.Tab.1.bottom" timestamp="1606160897967">
+    <state width="1877" height="391" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.0.left" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897967" />
-    <state width="1877" height="400" key="GridCell.Tab.1.center" timestamp="1606160897967">
+    <state width="1877" height="391" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.0.right" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897967" />
-    <state width="1877" height="400" key="GridCell.Tab.1.left" timestamp="1606160897966">
+    <state width="1877" height="391" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.1.bottom" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897966" />
-    <state width="1877" height="400" key="GridCell.Tab.1.right" timestamp="1606160897967">
+    <state width="1877" height="391" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.1.center" timestamp="1606938363298">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1877" height="400" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606160897967" />
+    <state width="1877" height="391" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.1.left" timestamp="1606938363298">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="391" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
+    <state width="1877" height="391" key="GridCell.Tab.1.right" timestamp="1606938363298">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1877" height="391" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
     <state x="853" y="153" key="SettingsEditor" timestamp="1606083784581">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="853" y="153" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1606083784581" />
+    <state x="552" y="268" key="Vcs.Push.Dialog.v2" timestamp="1606160942434">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="552" y="268" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1606160942434" />
     <state width="960" height="540" key="XDebugger.FullValuePopup" timestamp="1606156055993">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="960" height="540" key="XDebugger.FullValuePopup/0.0.1920.1080@0.0.1920.1080" timestamp="1606156055993" />
+    <state x="668" y="115" width="583" height="849" key="find.popup" timestamp="1606842851454">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="668" y="115" width="583" height="849" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1606842851454" />
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1606838029558">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1606838029558" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -219,13 +272,15 @@
         <watch expression="todo_container" />
         <watch expression="stuudium_page.request.body" />
         <watch expression="stuudium_page" />
+        <watch expression="var_task" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/stuudium$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1578596594433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/StuudiumScraper$constants.coverage" NAME="constants Coverage Results" MODIFIED="1605630134145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1606160251246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$constants.coverage" NAME="constants Coverage Results" MODIFIED="1606841120758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1606834468004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/StuudiumScraper$_h_ackermann_Function.coverage" NAME="(h)ackermann Function Coverage Results" MODIFIED="1583150054610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium_2_0.coverage" NAME="main Coverage Results" MODIFIED="1606938287151" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
