@@ -101,4 +101,3 @@ for any_do_task in CATEGORY.tasks():
     if not if_any_where(hws, lambda hw: any_do_task.title == hw[0] and any_do_task['dueDate'] == hw[1]):
         any_do_task.destroy()
         print("Task destroyed:", any_do_task.title)
-
