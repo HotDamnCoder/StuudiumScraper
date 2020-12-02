@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stuudium.py" beforeDir="false" />
-    </list>
+    <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -155,7 +149,7 @@
       <workItem from="1606160909614" duration="50000" />
       <workItem from="1606767495634" duration="844000" />
       <workItem from="1606832999832" duration="17822000" />
-      <workItem from="1606917258660" duration="10881000" />
+      <workItem from="1606917258660" duration="11057000" />
     </task>
     <task id="LOCAL−00001" summary="Major fixing and cleaning">
       <created>1600194773884</created>
@@ -170,7 +164,21 @@
       <option name="project" value="LOCAL" />
       <updated>1606160938033</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Major code cleanup and fixing">
+      <created>1606938898936</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1606938898936</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Major code cleanup and fixing">
+      <created>1606938928629</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606938928629</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,17 +199,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Major fixing and cleaning" />
     <MESSAGE value="fIXINFG" />
-    <option name="LAST_COMMIT_MESSAGE" value="fIXINFG" />
+    <MESSAGE value="Major code cleanup and fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major code cleanup and fixing" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606157500518">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1606157500518" />
-    <state x="585" y="21" key="CommitChangelistDialog2" timestamp="1606160937000">
+    <state x="585" y="21" key="CommitChangelistDialog2" timestamp="1606938928382">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="585" y="21" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1606160937000" />
+    <state x="585" y="21" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1606938928382" />
     <state width="1035" height="618" key="DebuggerActiveHint" timestamp="1606935516173">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -246,10 +255,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="853" y="153" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1606083784581" />
-    <state x="552" y="268" key="Vcs.Push.Dialog.v2" timestamp="1606160942434">
+    <state x="552" y="268" key="Vcs.Push.Dialog.v2" timestamp="1606938930230">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="552" y="268" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1606160942434" />
+    <state x="552" y="268" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1606938930230" />
     <state width="960" height="540" key="XDebugger.FullValuePopup" timestamp="1606156055993">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
