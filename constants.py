@@ -1,13 +1,14 @@
 import datetime
 import pickle
 import os.path
+import sys
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from anydo_api.client import Client
 
 
-with open('config.txt', 'r', encoding='UTF-8') as config:
+with open(sys.path[0] + '/config.txt', 'r', encoding='UTF-8') as config:
     lines = config.readlines()
 
     # SCHOOL INFO
@@ -109,17 +110,17 @@ VIKUNJA_LOGIN_PAYLOAD = {'username': ANY_DO_USERNAME,
 # Accessing Google api
 creds = None
 scopes = ['https://www.googleapis.com/auth/calendar']
-if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
+if os.path.exists(sys.path[0] + '/token.pickle'):
+    with open(sys.path[0] + '/token.pickle', 'rb') as token:
         creds = pickle.load(token)
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', scopes)
+        flow = InstalledAppFlow.from_client_secrets_file(sys.path[0] + 
+            '/credentials.json', scopes)
         creds = flow.run_local_server(port=0)
-    with open('token.pickle', 'wb') as token:
+    with open(sys.path[0] + '/token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
 SERVICE = build('calendar', 'v3', credentials=creds)

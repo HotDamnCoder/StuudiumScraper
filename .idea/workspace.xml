@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="" />
+    <list default="true" id="84b4aa4d-861d-49ac-b32b-500c248ab385" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/marcus.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/stuudium.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/stuudium.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helperFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/helperFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/token.pickle" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,9 +65,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.main (1)">
     <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="stuudium" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -46,6 +82,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/constants.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="stuudium" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -100,12 +158,14 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.constants" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.stuudium" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -149,7 +209,10 @@
       <workItem from="1606160909614" duration="50000" />
       <workItem from="1606767495634" duration="844000" />
       <workItem from="1606832999832" duration="17822000" />
-      <workItem from="1606917258660" duration="11057000" />
+      <workItem from="1606917258660" duration="11144000" />
+      <workItem from="1606939129297" duration="1762000" />
+      <workItem from="1607892196734" duration="40000" />
+      <workItem from="1607894672305" duration="1362000" />
     </task>
     <task id="LOCAL−00001" summary="Major fixing and cleaning">
       <created>1600194773884</created>
@@ -178,11 +241,25 @@
       <option name="project" value="LOCAL" />
       <updated>1606938928629</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Major code cleanup and fixing">
+      <created>1606938987488</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606938987488</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Major code cleanup and fixing">
+      <created>1606939041008</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606939041008</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -202,76 +279,6 @@
     <MESSAGE value="Major code cleanup and fixing" />
     <option name="LAST_COMMIT_MESSAGE" value="Major code cleanup and fixing" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606157500518">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="690" y="286" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1606157500518" />
-    <state x="585" y="21" key="CommitChangelistDialog2" timestamp="1606938928382">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="585" y="21" key="CommitChangelistDialog2/0.0.1920.1080@0.0.1920.1080" timestamp="1606938928382" />
-    <state width="1035" height="618" key="DebuggerActiveHint" timestamp="1606935516173">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1035" height="618" key="DebuggerActiveHint/0.0.1920.1080@0.0.1920.1080" timestamp="1606935516173" />
-    <state x="740" y="294" key="FileChooserDialogImpl" timestamp="1606849839747">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="740" y="294" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1606849839747" />
-    <state width="1877" height="391" key="GridCell.Tab.0.bottom" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.0.center" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.0.left" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.0.right" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.1.bottom" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.1.center" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.1.left" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state width="1877" height="391" key="GridCell.Tab.1.right" timestamp="1606938363298">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="1877" height="391" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1606938363298" />
-    <state x="853" y="153" key="SettingsEditor" timestamp="1606083784581">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="853" y="153" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1606083784581" />
-    <state x="552" y="268" key="Vcs.Push.Dialog.v2" timestamp="1606938930230">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="552" y="268" key="Vcs.Push.Dialog.v2/0.0.1920.1080@0.0.1920.1080" timestamp="1606938930230" />
-    <state width="960" height="540" key="XDebugger.FullValuePopup" timestamp="1606156055993">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state width="960" height="540" key="XDebugger.FullValuePopup/0.0.1920.1080@0.0.1920.1080" timestamp="1606156055993" />
-    <state x="668" y="115" width="583" height="849" key="find.popup" timestamp="1606842851454">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="668" y="115" width="583" height="849" key="find.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1606842851454" />
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup" timestamp="1606838029558">
-      <screen x="0" y="0" width="1920" height="1080" />
-    </state>
-    <state x="623" y="235" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1606838029558" />
-  </component>
   <component name="XDebuggerManager">
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -286,10 +293,11 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/stuudium$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1578596594433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/StuudiumScraper$constants.coverage" NAME="constants Coverage Results" MODIFIED="1606841120758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1606834468004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/StuudiumScraper$_h_ackermann_Function.coverage" NAME="(h)ackermann Function Coverage Results" MODIFIED="1583150054610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium_2_0.coverage" NAME="main Coverage Results" MODIFIED="1606938287151" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1606834468004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1607895583196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/stuudium$stuudium.coverage" NAME="stuudium Coverage Results" MODIFIED="1578596594433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/StuudiumScraper$constants.coverage" NAME="constants Coverage Results" MODIFIED="1606939799202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

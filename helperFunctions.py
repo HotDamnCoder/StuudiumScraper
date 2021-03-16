@@ -104,10 +104,13 @@ def update_existing_event(event_due_date: date, event_summary: str, event_info: 
     var_colliding_events = SERVICE.events().list(calendarId=calander_id,
                                                  timeMin=time_min,
                                                  timeMax=time_max).execute()['items']
-    event = find_where(var_colliding_events, lambda x: x['summary'] == event_summary)
+    try:
+        event = find_where(var_colliding_events, lambda x: x['summary'] == event_summary)
 
-    SERVICE.events().update(calendarId=calander_id, eventId=event['id'],
-                            body=event_info)
+        SERVICE.events().update(calendarId=calander_id, eventId=event['id'],
+                                body=event_info)
+    except Exception:
+        pass
 
 
 def list_lesson_events(start_date: date, end_date: date):

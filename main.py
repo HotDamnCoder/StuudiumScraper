@@ -79,15 +79,16 @@ for hw_container in hw_containers:
         any_do_task = find_where(CATEGORY.tasks(),
                                  lambda task: task.title == hw_text and task['dueDate'] != due_date_in_ticks)
         if is_test:
-            task_due_date = datetime.fromtimestamp(any_do_task['dueDate'])
+            task_due_date = datetime.fromtimestamp(int(any_do_task['dueDate'] / 1000))
             update_existing_event(task_due_date, hw_text, task_event, SCHOOL_TEST_CALANDER_ID)
+        # this doesnt work
         any_do_task['dueDate'] = due_date_in_ticks
         USER.save()
     # Finds task corresponding to the homework and checks it if it is checked in Stuudium and not in tasks
     else:
         any_do_task = find_where(CATEGORY.tasks(),
                                  lambda task: task.title == hw_text and task['dueDate'] == due_date_in_ticks)
-        if is_marked and any_do_task['status'] == "":
+        if is_marked:
             any_do_task.check()
             print('Task checked:', any_do_task.title)
 
