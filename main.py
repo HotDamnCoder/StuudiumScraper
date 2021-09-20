@@ -1,104 +1,111 @@
-from anydo_api.task import Task as Any_do_task
-from bs4 import BeautifulSoup
+import sys
+import datetime
+from datetime import datetime as dt
+from CalendarAPI import CalendarAPI
+from Stuudium import Stuudium
+from Timetable import Timetable
 from helperFunctions import *
 
+#* Read in constants from config
+with open(sys.path[0] + '/config.txt', 'r', encoding='UTF-8') as config:
+    lines = config.readlines()
 
-# Get timetable
-for i in range(2):
-    timetable_db, timetable = get_timetable_data(TIMETABLE_URL, TIMETABLE_DATABASE_URL, TIMETABLE_PAYLOAD,
-                                                 TIMETABLE_DATABASES_PAYLOAD, CLASS)
-    set_timetable_payload_date(TIMETABLE_PAYLOAD, TIMETABLE_DATABASES_PAYLOAD, NEXTWEEKDATEFROM, NEXTWEEKDATETO)
-    add_lessons(timetable, timetable_db, STUDY_GROUP)
+    #* SCHOOL INFO
+    STUDY_YEAR = int(lines[0].split(':')[1].strip())
+    GRADE = lines[1].split(':')[1].strip().lower()
+    STUDY_GROUP = 'Group ' + lines[2].split(':')[1].strip()
+    BLACKLISTED_LESSONS = lines[3].split(':')[1].strip().lower().split(',')
 
-# Get stuudium page
-stuudium_session = requests.session()
-stuudium_session.headers = STUUDIUM_HEADERS
-stuudium_session.post(STUUDIUM_LOGIN_URL, STUUDIUM_PAYLOAD)
-stuudium_page = stuudium_session.get(STUUDIUM_PAGE_URL)
-stuudium_session.close()
-
-# This part gets tasks from stuudium page
-
-# Abbreviation 'hw' means homework
-hw_containers = BeautifulSoup(stuudium_page.text, features="html.parser").findAll('div', {'class': 'todo_container'})
-# List of homework text and due date in ticks tuples
-hws = []
-for hw_container in hw_containers:
-    # Gets needed info for homework from Stuudium
-    due_date_in_ticks = int(hw_container.attrs['data-date_ts']) * 1000
-
-    due_date = hw_container.attrs['data-date']
-    year = due_date[:-4]
-    day = due_date[-2:]
-    month = due_date[-4:-2]
-    due_date = "-".join([year, month, day])
-
-    is_marked = 'is_marked' in hw_container.attrs['class']
-
-    is_test = 'is_test' in hw_container.find('div').attrs['class']
-
-    hw_text = " ".join(hw_container.text.strip().split('\n')[:-1])
-
-    task_event = {
-        'summary': hw_text,
-        'start': {
-            'date': due_date,
-            'timeZone': 'EET'
-        },
-        'end': {
-            'date': due_date,
-            'timeZone': 'EET'
-        },
-        'reminders': {
-            'useDefault': False,
-            'overrides': [
-            ]
-        }
-    } if is_test else None
-    # Adds homework to tasks if there isn't already for the homework
-    # Also adds it to calander if its a test and it isn't already there
-    if not if_any_where(CATEGORY.tasks(), lambda x: x.title == hw_text):
-        if is_test:
-            SERVICE.events().insert(calendarId=SCHOOL_TEST_CALANDER_ID, body=task_event).execute()
-            print('Added test "' + hw_text + '" to calender')
-        any_do_task = Any_do_task.create(
-            status="CHECKED" if is_marked else "",
-            user=USER,
-            title=hw_text,
-            priority='High' if is_test else 'Low',
-            category=CATEGORY['name'],
-            repeatingMethod='TASK_REPEAT_OFF',
-            alert=ANY_DO_ALERT,
-            dueDate=due_date_in_ticks)
-        CATEGORY.add_task(any_do_task)
-        print("Task added:", any_do_task.title)
-    # Updates tasks that has had its corresponding homework due date changed
-    # Also updates corresponding calander event
-    elif if_any_where(CATEGORY.tasks(),
-                      lambda task: task.title == hw_text and task['dueDate'] != due_date_in_ticks):
-        any_do_task = find_where(CATEGORY.tasks(),
-                                 lambda task: task.title == hw_text and task['dueDate'] != due_date_in_ticks)
-        if is_test:
-            task_due_date = datetime.fromtimestamp(int(any_do_task['dueDate'] / 1000))
-            update_existing_event(task_due_date, hw_text, task_event, SCHOOL_TEST_CALANDER_ID)
-        # this doesnt work
-        any_do_task['dueDate'] = due_date_in_ticks
-        USER.save()
-    # Finds task corresponding to the homework and checks it if it is checked in Stuudium and not in tasks
-    else:
-        any_do_task = find_where(CATEGORY.tasks(),
-                                 lambda task: task.title == hw_text and task['dueDate'] == due_date_in_ticks)
-        if is_marked:
-            any_do_task.check()
-            print('Task checked:', any_do_task.title)
-
-    hws.append((hw_text, due_date_in_ticks))
+    #* STUUDIUM INFO
+    STUUDIUM_USERNAME = lines[4].split(':')[1].strip()
+    STUUDIUM_PASSWORD = lines[5].split(':')[1].strip()
 
 
-# Removes old tasks by comparing if there's not any task:
-#   with the same name of already existing homeworks and
-#   with same due date of existing homeworks
-for any_do_task in CATEGORY.tasks():
-    if not if_any_where(hws, lambda hw: any_do_task.title == hw[0] and any_do_task['dueDate'] == hw[1]):
-        any_do_task.destroy()
-        print("Task destroyed:", any_do_task.title)
+#* Date info
+DATE_FROM = datetime.date.today() - datetime.timedelta(days=datetime.date.today().weekday())
+DATE_TO = DATE_FROM + datetime.timedelta(days=6)
+NEXT_WEEK_DATE_FROM = DATE_FROM + datetime.timedelta(days=7)
+NEXT_WEEK_DATE_TO = DATE_TO + datetime.timedelta(days=7)
+
+calendarAPI = CalendarAPI()
+timetable = Timetable()
+stuudium = Stuudium(STUUDIUM_USERNAME, STUUDIUM_PASSWORD)
+
+#* Find subject and tests calendar ids
+subject_calendars_ids = {}
+tests_calendar_id = ''
+
+calendars = calendarAPI.listCalendarsIds()
+
+for calendar in calendars:
+    if 'tund' in calendar.lower():
+        subject_calendars_ids[calendar] = calendars[calendar]
+    elif 'kontrolltööd' in calendar.lower():
+        tests_calendar_id = calendars[calendar]
+
+test_events = calendarAPI.listEvents(
+    calendar_id=tests_calendar_id, events=[])
+
+homeworks = stuudium.getHomeworks()
+for homework in homeworks:
+    if homework.test:
+        homework_event = homework.createCalendarEvent()
+        homework_event['summary'] = homework.subject.capitalize() + " KT: " + homework_event['summary']
+
+        same_events = findSameEvents(
+            searched_event=homework_event, events=test_events)
+
+        if len(same_events) != 0:
+            print('Found possible duplicate/outdated test events!')
+            event_already_exists = False
+            for same_event in same_events:
+                if not equalEvents(homework_event, same_event) or event_already_exists:
+                    print('Found duplicate/outdated test event!')
+                    calendarAPI.removeEvent(
+                        tests_calendar_id, same_event)
+                else:
+                    print('Event for current test already exists!')
+                    event_already_exists = True
+            if not event_already_exists:
+                calendarAPI.addEvent(
+                    tests_calendar_id, homework_event)
+        else:
+            calendarAPI.addEvent(tests_calendar_id, homework_event)
+
+current_week_lessons = timetable.getLessons(study_year=STUDY_YEAR, date_from=DATE_FROM,
+                                            date_to=DATE_TO, grade=GRADE, study_group=STUDY_GROUP)
+next_week_lessons = timetable.getLessons(
+    study_year=STUDY_YEAR, study_group=STUDY_GROUP, grade=GRADE, date_from=NEXT_WEEK_DATE_FROM, date_to=NEXT_WEEK_DATE_TO)
+lessons = [current_week_lessons, next_week_lessons]
+
+for week_lessons in lessons:
+    for lesson in week_lessons:
+        if lesson.subject.lower() in BLACKLISTED_LESSONS:
+            continue
+
+        lesson_subject_calendar_id = getSubjectCalendarID(
+            subject=lesson.subject, subject_calendars_ids=subject_calendars_ids)
+        lesson_event = lesson.createCalendarEvent()
+
+        lessons_events = calendarAPI.listEvents(calendar_id=lesson_subject_calendar_id,
+                                                start_date=lesson.getStartDate(), end_date=lesson.getEndDate(), events=[])
+
+        if len(lessons_events) != 0:
+            print('Found possible duplicate/outdated lesson events!')
+            event_already_exists = False
+            for colliding_event in lessons_events:
+                if not equalEvents(lesson_event, colliding_event) or event_already_exists:
+                    print('Found duplicate/outdated lesson event!')
+                    calendarAPI.removeEvent(
+                        lesson_subject_calendar_id, colliding_event)
+                else:
+                    print('Event for current lesson already exists!')
+                    event_already_exists = True
+            if not event_already_exists:
+                calendarAPI.addEvent(lesson_subject_calendar_id, lesson_event)
+        else:
+            calendarAPI.addEvent(lesson_subject_calendar_id, lesson_event)
+
+
+#TODO: Add better comments
+#TODO: Right now lessons check duplicates in the same subject calendar but should look in other subject calendars also. Fix it!
