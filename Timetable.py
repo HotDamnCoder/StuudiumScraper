@@ -59,11 +59,11 @@ class Timetable:
         self.__DATABASE_PAYLOAD['__args'][1] = study_year
         self.LESSON_TABLE_PAYLOAD['__args'][1]['year'] = study_year
 
-        self.__DATABASE_PAYLOAD['__args'][2]['vt_filter']['datefrom'] = str(date_from)
-        self.LESSON_TABLE_PAYLOAD['__args'][1]['datefrom'] = str(date_from)
+        self.__DATABASE_PAYLOAD['__args'][2]['vt_filter']['datefrom'] = date_from.strftime('%Y-%m-%d')
+        self.LESSON_TABLE_PAYLOAD['__args'][1]['datefrom'] = date_from.strftime('%Y-%m-%d')
 
-        self.__DATABASE_PAYLOAD['__args'][2]['vt_filter']['dateto'] = str(date_to)
-        self.LESSON_TABLE_PAYLOAD['__args'][1]['dateto'] = str(date_to)
+        self.__DATABASE_PAYLOAD['__args'][2]['vt_filter']['dateto'] = date_to.strftime('%Y-%m-%d')
+        self.LESSON_TABLE_PAYLOAD['__args'][1]['dateto'] = date_to.strftime('%Y-%m-%d')
 
     def __getGrades_N_Subjects(self) -> tuple[dict[str, str], dict[str, str]]:
         database_session = requests.session()

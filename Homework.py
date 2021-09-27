@@ -4,7 +4,7 @@ from datetime import datetime as dt
 class Homework:
     def __init__(self, homework_html) -> None:
 
-        self.due_date = dt.strptime(homework_html['data-date'], '%Y%m%d')
+        self.due_date = dt.strptime(homework_html['data-date'], '%Y%m%d').date()
 
         self.done = 'is_marked' in homework_html['class']
 
@@ -17,17 +17,17 @@ class Homework:
         self.text = homework_html.find_next(
             'span', {'class': 'todo_content'}).text.strip()
 
-    def getDueDate(self) -> str:
+    def __getDueDate(self) -> str:
         return self.due_date.strftime('%Y-%m-%d')
 
     def createCalendarEvent(self) -> dict:
         return {
             'summary': self.text,
             'start': {
-                'date': self.getDueDate(),
+                'date': self.__getDueDate(),
             },
             'end': {
-                'date': self.getDueDate(),
+                'date': self.__getDueDate(),
             },
             'reminders': {
                 'useDefault': False,

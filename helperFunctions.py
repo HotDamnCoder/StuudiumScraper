@@ -1,3 +1,4 @@
+
 from exceptions import NoSubjectCalander
 
 def getSubjectCalendarID(subject: str, subject_calendars_ids: dict[str, str]) -> str:
@@ -9,7 +10,7 @@ def getSubjectCalendarID(subject: str, subject_calendars_ids: dict[str, str]) ->
             "Didn't find subject '" + subject + "' calendar id")
 
 
-def findSameEvents(searched_event, events):
+def findSameEvents(searched_event, events) -> list:
     colliding_events = []
     for event in events:
         if (event['summary'] == searched_event['summary']):
@@ -17,7 +18,9 @@ def findSameEvents(searched_event, events):
     return colliding_events
 
 
-def equalEvents(event1, event2):
+
+
+def equalEvents(event1, event2) -> bool:
     #! kinda bad implementation but I couldnt be arsed to overengineer a better solution
 
     event1_start_date_str = event1['start']['date'] if 'date' in event1['start'].keys() else event1['start']['dateTime']

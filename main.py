@@ -1,6 +1,5 @@
 import sys
 import datetime
-from datetime import datetime as dt
 from CalendarAPI import CalendarAPI
 from Stuudium import Stuudium
 from Timetable import Timetable
@@ -27,7 +26,7 @@ DATE_TO = DATE_FROM + datetime.timedelta(days=6)
 NEXT_WEEK_DATE_FROM = DATE_FROM + datetime.timedelta(days=7)
 NEXT_WEEK_DATE_TO = DATE_TO + datetime.timedelta(days=7)
 
-calendarAPI = CalendarAPI()
+calendarAPI = CalendarAPI() 
 timetable = Timetable()
 stuudium = Stuudium(STUUDIUM_USERNAME, STUUDIUM_PASSWORD)
 
@@ -72,6 +71,13 @@ for homework in homeworks:
         else:
             calendarAPI.addEvent(tests_calendar_id, homework_event)
 
+
+subject_calendar_events = {}
+for subject_calendar_id in subject_calendars_ids:
+    subject_events = calendarAPI.listEvents(calendar_id=subject_calendars_ids[subject_calendar_id],
+                                                start_date=DATE_FROM, end_date=NEXT_WEEK_DATE_TO, events=[])
+    subject_calendar_events[subject_calendars_ids[subject_calendar_id]] = subject_events
+
 current_week_lessons = timetable.getLessons(study_year=STUDY_YEAR, date_from=DATE_FROM,
                                             date_to=DATE_TO, grade=GRADE, study_group=STUDY_GROUP)
 next_week_lessons = timetable.getLessons(
@@ -87,25 +93,17 @@ for week_lessons in lessons:
             subject=lesson.subject, subject_calendars_ids=subject_calendars_ids)
         lesson_event = lesson.createCalendarEvent()
 
-        lessons_events = calendarAPI.listEvents(calendar_id=lesson_subject_calendar_id,
-                                                start_date=lesson.getStartDate(), end_date=lesson.getEndDate(), events=[])
-
-        if len(lessons_events) != 0:
-            print('Found possible duplicate/outdated lesson events!')
-            event_already_exists = False
-            for colliding_event in lessons_events:
-                if not equalEvents(lesson_event, colliding_event) or event_already_exists:
-                    print('Found duplicate/outdated lesson event!')
-                    calendarAPI.removeEvent(
-                        lesson_subject_calendar_id, colliding_event)
-                else:
-                    print('Event for current lesson already exists!')
-                    event_already_exists = True
-            if not event_already_exists:
-                calendarAPI.addEvent(lesson_subject_calendar_id, lesson_event)
-        else:
+        event_already_exists = False
+        for subject_calendar_id in subject_calendar_events:
+            subject_events = subject_calendar_events[subject_calendar_id]
+            for subject_event in subject_events:
+                if equalEvents(lesson_event, subject_event):
+                    if lesson_event['summary'] != subject_event['summary'] or event_already_exists:
+                        print('Found duplicate/outdated lesson event!')
+                        calendarAPI.removeEvent(
+                            subject_calendar_id, subject_event)
+                    else:
+                        print('Event for current lesson already exists!')
+                        event_already_exists = True
+        if not event_already_exists:
             calendarAPI.addEvent(lesson_subject_calendar_id, lesson_event)
-
-
-#TODO: Add better comments
-#TODO: Right now lessons check duplicates in the same subject calendar but should look in other subject calendars also. Fix it!
