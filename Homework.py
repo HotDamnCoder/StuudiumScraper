@@ -14,8 +14,13 @@ class Homework:
         self.subject = homework_html.find_next(
             'a', {'class': 'subject_name'}).text.strip().lower()
 
-        self.text = homework_html.find_next(
-            'span', {'class': 'todo_content'}).text.strip()
+        todo_content = homework_html.find_next(
+            'span', {'class': 'todo_content'})
+        
+        if todo_content is None:
+            self.text = ""
+        else:
+            self.text = todo_content.text.strip()
 
     def __getDueDate(self) -> str:
         return self.due_date.strftime('%Y-%m-%d')
