@@ -58,7 +58,7 @@ for homework in homeworks:
             print('Found possible duplicate/outdated test events!')
             event_already_exists = False
             for same_event in same_events:
-                if not equalEvents(homework_event, same_event) or event_already_exists:
+                if not sameTimeEvents(homework_event, same_event) or event_already_exists:
                     print('Found duplicate/outdated test event!')
                     calendarAPI.removeEvent(
                         tests_calendar_id, same_event)
@@ -97,7 +97,7 @@ for week_lessons in lessons:
         for subject_calendar_id in subject_calendar_events:
             subject_events = subject_calendar_events[subject_calendar_id]
             for subject_event in subject_events:
-                if equalEvents(lesson_event, subject_event):
+                if sameTimeEvents(lesson_event, subject_event):
                     if lesson_event['summary'] != subject_event['summary'] or event_already_exists:
                         print('Found duplicate/outdated lesson event!')
                         calendarAPI.removeEvent(

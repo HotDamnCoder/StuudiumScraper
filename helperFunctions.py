@@ -20,7 +20,7 @@ def findSameEvents(searched_event, events) -> list:
 
 
 
-def equalEvents(event1, event2) -> bool:
+def sameTimeEvents(event1, event2) -> bool:
     #! kinda bad implementation but I couldnt be arsed to overengineer a better solution
 
     event1_start_date_str = event1['start']['date'] if 'date' in event1['start'].keys() else event1['start']['dateTime']

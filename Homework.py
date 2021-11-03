@@ -11,14 +11,14 @@ class Homework:
         self.test = 'is_test' in homework_html.find_next(
             'div', {'class': 'todo'})['class']
 
-        self.subject = homework_html.find_next(
+        self.subject = homework_html.findChild(
             'a', {'class': 'subject_name'}).text.strip().lower()
 
-        todo_content = homework_html.find_next(
+        todo_content = homework_html.findChild(
             'span', {'class': 'todo_content'})
         
         if todo_content is None:
-            self.text = ""
+            self.text = str(self.due_date)
         else:
             self.text = todo_content.text.strip()
 
