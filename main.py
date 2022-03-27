@@ -1,5 +1,6 @@
 import sys
 import datetime
+from requests import get
 from CalendarAPI import CalendarAPI
 from Stuudium import Stuudium
 from Timetable import Timetable
@@ -91,6 +92,10 @@ for week_lessons in lessons:
 
         lesson_subject_calendar_id = getSubjectCalendarID(
             subject=lesson.subject, subject_calendars_ids=subject_calendars_ids)
+
+        if lesson_subject_calendar_id == '':
+            continue
+        
         lesson_event = lesson.createCalendarEvent()
 
         event_already_exists = False
@@ -107,3 +112,6 @@ for week_lessons in lessons:
                         event_already_exists = True
         if not event_already_exists:
             calendarAPI.addEvent(lesson_subject_calendar_id, lesson_event)
+
+get('http://uptime.room241.wtf/api/push/wAKBWGyrXY?msg=OK&ping=')
+

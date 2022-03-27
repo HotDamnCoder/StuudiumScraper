@@ -101,8 +101,14 @@ class Timetable:
                 item_start_time = item['starttime']
                 item_end_time = item['endtime']
                 item_subject_id = item['subjectid']
-                lessons.append(Lesson(item_date, item_start_time,
-                               item_end_time, grade, subject_names[item_subject_id]))
+
+                if item_subject_id != '':
+                    if item_subject_id in subject_names:
+                        lessons.append(Lesson(item_date, item_start_time,
+                        item_end_time, grade, subject_names[item_subject_id]))
+                    else:
+                        lessons.append(Lesson(item_date, item_start_time,
+                        item_end_time, grade, item_subject_id))
 
         return lessons
 

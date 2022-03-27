@@ -6,8 +6,8 @@ def getSubjectCalendarID(subject: str, subject_calendars_ids: dict[str, str]) ->
     if subject_calendar_name in subject_calendars_ids:
         return subject_calendars_ids[subject_calendar_name]
     else:
-        raise NoSubjectCalander(
-            "Didn't find subject '" + subject + "' calendar id")
+        print ("Didn't find subject '" + subject + "' calendar id")
+        return ''
 
 
 def findSameEvents(searched_event, events) -> list:
